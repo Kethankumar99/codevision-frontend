@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser, registerUser, setToken } from '../services/api';
+import { loginUser, setToken } from '../services/api';
 
 export default function LoginPage({ onLogin, onSwitchToRegister }) {
   const [email, setEmail] = useState('');
@@ -19,8 +19,6 @@ export default function LoginPage({ onLogin, onSwitchToRegister }) {
       if (token) {
         setToken(token);
         onLogin(token);
-      } else {
-        setError('No token received');
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Invalid email or password');
@@ -44,8 +42,8 @@ export default function LoginPage({ onLogin, onSwitchToRegister }) {
         )}
 
         <form onSubmit={handleSubmit}>
-          <input type="email" value={email} onChange={e=>setEmail(e.target.value)}
-            className="url-input" placeholder="Email" style={{marginBottom:10}} />
+          <input type="text" value={email} onChange={e=>setEmail(e.target.value)}
+            className="url-input" placeholder="Email address" style={{marginBottom:10}} />
           
           <input type="password" value={password} onChange={e=>setPassword(e.target.value)}
             className="url-input" placeholder="Password" style={{marginBottom:15}} />

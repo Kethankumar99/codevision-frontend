@@ -3,7 +3,6 @@ import { registerUser, setToken } from '../services/api';
 
 export default function RegisterPage({ onRegister, onSwitchToLogin }) {
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,6 +16,9 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
     setSuccess('');
 
     try {
+      // Auto-generate username from email
+      const username = email.split('@')[0];
+      
       const res = await registerUser({ 
         email, username, password, fullName 
       });
@@ -44,13 +46,19 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
         <p style={{marginBottom: 20}}>Create your account</p>
 
         {error && (
-          <div style={s.alert}>
+          <div style={{
+            background:'rgba(239,68,68,0.15)',border:'1px solid #ef4444',
+            color:'#fca5a5',padding:12,borderRadius:8,marginBottom:15,fontSize:14
+          }}>
             ❌ {error}
           </div>
         )}
         
         {success && (
-          <div style={{...s.alert, background:'rgba(34,197,94,0.15)',border:'1px solid #22c55e',color:'#86efac'}}>
+          <div style={{
+            background:'rgba(34,197,94,0.15)',border:'1px solid #22c55e',
+            color:'#86efac',padding:12,borderRadius:8,marginBottom:15,fontSize:14
+          }}>
             ✅ {success}
           </div>
         )}
@@ -58,9 +66,6 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
         <form onSubmit={handleSubmit}>
           <input type="text" value={fullName} onChange={e=>setFullName(e.target.value)}
             className="url-input" placeholder="Full Name" style={{marginBottom:10}} required />
-          
-          <input type="text" value={username} onChange={e=>setUsername(e.target.value)}
-            className="url-input" placeholder="Username" style={{marginBottom:10}} required />
           
           <input type="email" value={email} onChange={e=>setEmail(e.target.value)}
             className="url-input" placeholder="Email address" style={{marginBottom:10}} required />
@@ -84,15 +89,3 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
     </div>
   );
 }
-
-const s = {
-  alert: {
-    background:'rgba(239,68,68,0.15)',
-    border:'1px solid #ef4444',
-    color:'#fca5a5',
-    padding:12,
-    borderRadius:8,
-    marginBottom:15,
-    fontSize:14
-  }
-};
