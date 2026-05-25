@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { loginUser, setToken } from '../services/api';
+import { loginUser, registerUser, setToken } from '../services/api';
 
 export default function LoginPage({ onLogin, onSwitchToRegister }) {
-  const [email, setEmail] = useState('kethan@codevision.ai');
-  const [password, setPassword] = useState('Kethan@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
