@@ -5,7 +5,7 @@ let authToken = null;
 export const setToken = (token) => { authToken = token; };
 
 const API = axios.create({ 
-  baseURL: 'http://localhost:8080/api',
+  baseURL: 'https://codevision-backend-production-68c7.up.railway.app/api',
   timeout: 30000
 });
 
